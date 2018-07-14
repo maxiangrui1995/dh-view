@@ -7,7 +7,7 @@
       <div class="box-body-header"></div>
       <div class="box-body-content">
         <div class="box-body-content-left">
-
+          <origin-item>海安县交警大队1分队</origin-item>
         </div>
         <div class="box-body-content-right">
           <div class="box-body-content-inner">
@@ -33,7 +33,12 @@
 </template>
 
 <script>
-export default {};
+import originItem from "@/components/origin-item";
+export default {
+  components: {
+    originItem
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -49,7 +54,7 @@ export default {};
     left: 109px;
     text-shadow: 0 0 5px #fff, 0 0 7px #fff;
     text-align: center;
-    font-size: 1.48em;
+    font-size: 1.268em;
   }
   &-body {
     position: absolute;
@@ -68,6 +73,8 @@ export default {};
         display: inline-block;
         vertical-align: top;
         width: 30%;
+        position: relative;
+        top: 15px;
       }
       &-right {
         display: inline-block;
@@ -79,6 +86,7 @@ export default {};
         height: 30px;
         line-height: 30px;
         font-size: 1.086em;
+        text-indent: 10px;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;

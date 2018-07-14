@@ -5,12 +5,21 @@
     </div>
     <div class="layout-body">
       <el-row>
-        <el-col :span="6">
+        <el-col :span="6" class="layout-body-inner">
           <div class="video-channel">
             <video-channel/>
           </div>
+          <div class="devs-total">
+            <devs-total/>
+          </div>
+          <div class="nodes-total">
+            <nodes-total/>
+          </div>
+          <div class="camera-total">
+            <camera-total/>
+          </div>
         </el-col>
-        <el-col :span="12">
+        <el-col :span="12" class="layout-body-inner">
           <div class="menu-bar">
             <menu-bar/>
           </div>
@@ -21,7 +30,7 @@
             <organ-tree/>
           </div>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="6" class="layout-body-inner">
           C
         </el-col>
       </el-row>
@@ -44,7 +53,12 @@ export default {
       require(["./home-components/center-news"], resolve),
     "organ-tree": resolve => require(["./home-components/organ-tree"], resolve),
     "video-channel": resolve =>
-      require(["./home-components/video-channel"], resolve)
+      require(["./home-components/video-channel"], resolve),
+    "devs-total": resolve => require(["./home-components/devs-total"], resolve),
+    "nodes-total": resolve =>
+      require(["./home-components/nodes-total"], resolve),
+    "camera-total": resolve =>
+      require(["./home-components/camera-total"], resolve)
   }
 };
 </script>
@@ -59,6 +73,17 @@ export default {
     height: 78px;
   }
   &-body {
+    position: relative;
+    &:before {
+      display: block;
+      content: "";
+      width: 765px;
+      height: 101px;
+      background: url("~@/assets/footerline.png");
+      position: absolute;
+      left: 0;
+      bottom: 0;
+    }
     .menu-bar {
       margin-top: 30px;
     }
@@ -67,6 +92,15 @@ export default {
     }
     .organ-tree {
       margin-top: 15px;
+    }
+    .devs-total {
+      margin-top: 30px;
+    }
+    .nodes-total {
+      margin-top: 30px;
+    }
+    .camera-total {
+      margin-top: 30px;
     }
   }
 }
