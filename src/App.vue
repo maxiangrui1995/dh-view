@@ -1,29 +1,34 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <el-scrollbar :style="{height: '100%'}">
+    <y-home/>
+  </el-scrollbar>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+import yHome from "./views/Home";
+export default {
+  components: { yHome },
+  methods: {},
+  beforeCreate() {
+    // 验证是否登录：读取本地cookie(znyw_token)
+    let reg = new RegExp("(^| )znyw_token=([^;]*)(;|$)");
+    if (!document.cookie.match(reg)) {
+      // 取当前环境
+      if (process.env.NODE_ENV === "production") {
+        window.location.href = "http://www.baidu.com";
+      } else {
+        /* this.$message({
+          message: "警告！未登录",
+          type: "warning",
+          showClose: true
+        }); */
+      }
     }
   }
-}
+};
+</script>
+
+<style>
 </style>
+
+
