@@ -59,6 +59,14 @@ export default {
       require(["./home-components/nodes-total"], resolve),
     "camera-total": resolve =>
       require(["./home-components/camera-total"], resolve)
+  },
+  created() {
+    this.$nextTick(() => {
+      let ele = this.$refs.main;
+      console.log(ele);
+      /* ele.style.transformOrigin = "0 0";
+      ele.style.transform = "scaleX(0.8) scaleY(0.8)"; */
+    });
   }
 };
 </script>
