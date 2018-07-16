@@ -1,25 +1,25 @@
 <template>
-    <div class="box">
-        <div class="box-title">
-            <span class="box-title-wrapper">运维节点</span>
-        </div>
-        <div class="box-body">
-            <div class="box-body-item">
-                <div class="box-body-item-info">
-                    <div class="box-body-item-view sum"></div>
-                    <div class="box-body-item-info-num">7332</div>
-                    <div class="box-body-item-info-title">总节点 (个)</div>
-                </div>
-            </div>
-            <div class="box-body-item">
-                <div class="box-body-item-info">
-                    <div class="box-body-item-view one"></div>
-                    <div class="box-body-item-info-num">96</div>
-                    <div class="box-body-item-info-title">运行节点 (个)</div>
-                </div>
-            </div>
-        </div>
+  <div class="box fadeInLeft animated">
+    <div class="box-title">
+      <span class="box-title-wrapper">运维节点</span>
     </div>
+    <div class="box-body">
+      <div class="box-body-item">
+        <div class="box-body-item-info">
+          <div class="box-body-item-view sum"></div>
+          <div class="box-body-item-info-num">7332</div>
+          <div class="box-body-item-info-title">总节点 (个)</div>
+        </div>
+      </div>
+      <div class="box-body-item">
+        <div class="box-body-item-info">
+          <div class="box-body-item-view one"></div>
+          <div class="box-body-item-info-num">96</div>
+          <div class="box-body-item-info-title">运行节点 (个)</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -27,6 +27,9 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
+.box {
+  animation-delay: 0.06s;
+}
 .box-title {
   width: 342px;
   height: 45px;
@@ -48,7 +51,7 @@ export default {};
   margin: 0 auto;
   &-item {
     display: inline-block;
-    width: 160px;
+    width: 170px;
     &-view {
       position: absolute;
       top: 0;

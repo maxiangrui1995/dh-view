@@ -1,7 +1,12 @@
 <template>
-  <el-scrollbar :style="{height: '100%'}">
+  <!-- <el-scrollbar :style="{height: '100%'}">
+    <div class="container">
+      <y-home/>
+    </div>
+  </el-scrollbar> -->
+  <div class="container">
     <y-home/>
-  </el-scrollbar>
+  </div>
 </template>
 
 <script>
@@ -28,7 +33,12 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.container {
+  width: 1920px;
+  height: 1080px;
+  background: url("~@/assets/0-bg.png") #06143b;
+}
 </style>
 
 

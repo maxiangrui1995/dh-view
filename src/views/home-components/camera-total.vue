@@ -1,20 +1,20 @@
 <template>
-    <div class="box">
-        <div class="box-inner">
-            <div class="box-inner-title">相机实时在线率</div>
-            <div class="box-inner-body">
-                <div class="box-inner-body-view"></div>
-                <div class="box-inner-body-info">20.33%</div>
-            </div>
-        </div>
-        <div class="box-inner">
-            <div class="box-inner-title">相机实时通断率</div>
-            <div class="box-inner-body">
-                <div class="box-inner-body-view"></div>
-                <div class="box-inner-body-info">20.33%</div>
-            </div>
-        </div>
+  <div class="box fadeInLeft animated">
+    <div class="box-inner">
+      <div class="box-inner-title">相机实时在线率</div>
+      <div class="box-inner-body">
+        <div class="box-inner-body-view"></div>
+        <div class="box-inner-body-info">20.33%</div>
+      </div>
     </div>
+    <div class="box-inner">
+      <div class="box-inner-title">相机实时通断率</div>
+      <div class="box-inner-body">
+        <div class="box-inner-body-view"></div>
+        <div class="box-inner-body-info">20.33%</div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -23,6 +23,7 @@ export default {};
 
 <style lang="scss" scoped>
 .box {
+  animation-delay: 0.09s;
   &-inner {
     width: 430px;
     margin: 0 auto;

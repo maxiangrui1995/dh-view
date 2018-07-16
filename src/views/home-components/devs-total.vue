@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="box fadeInLeft animated">
     <div class="box-title">
       <span class="box-title-wrapper">设备监视</span>
     </div>
@@ -29,6 +29,9 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
+.box {
+  animation-delay: 0.03s;
+}
 .box-title {
   width: 342px;
   height: 45px;

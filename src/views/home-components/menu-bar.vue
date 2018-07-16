@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="box fadeInUp animated">
     <div class="box-wrapper">
       <div class="box-item" v-for="item in menuList" :key="item.name" :class="{active: item.name === menuActive}">
         <i :class="item.class" class="box-item-icon"></i>
@@ -74,12 +74,12 @@ export default {
 
 <style lang="scss" scoped>
 .box {
-  width: 100%;
+  width: 960px;
   height: 57px;
   background: url("~@/assets/2-menu-bg.png") no-repeat center;
   position: relative;
   &-wrapper {
-    width: 638px;
+    width: 645px;
     margin: 0 auto;
   }
   &-item {
@@ -88,7 +88,7 @@ export default {
     line-height: 36px;
     font-size: 1.268em;
     color: #67c7eb;
-    margin-left: 38px;
+    margin-left: 36px;
     cursor: pointer;
     &-icon {
       width: 36px;
@@ -99,7 +99,7 @@ export default {
     }
   }
   &-item:first-child {
-    margin-left: 0;
+    margin-left: 6px;
   }
   &-time {
     color: #67c7eb;

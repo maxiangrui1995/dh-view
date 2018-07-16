@@ -1,5 +1,5 @@
 <template>
-  <div class="box">
+  <div class="box fadeInLeft animated">
     <div class="box-title">
       <span>视频通道</span>
     </div>

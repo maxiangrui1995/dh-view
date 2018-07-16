@@ -15,7 +15,6 @@ export default {};
   height: 114px;
   background: url("~@/assets/1-header.png") no-repeat;
   position: relative;
-  animation-duration: 0.3s;
   &-logo {
     width: 261px;
     padding-top: 32px;

@@ -1,39 +1,42 @@
 <template>
-  <div class="layout" ref="main">
+  <div class="layout">
     <div class="layout-header">
       <header-logo/>
     </div>
     <div class="layout-body">
-      <el-row>
-        <el-col :span="6" class="layout-body-inner">
-          <div class="video-channel">
-            <video-channel/>
-          </div>
-          <div class="devs-total">
-            <devs-total/>
-          </div>
-          <div class="nodes-total">
-            <nodes-total/>
-          </div>
-          <div class="camera-total">
-            <camera-total/>
-          </div>
-        </el-col>
-        <el-col :span="12" class="layout-body-inner">
-          <div class="menu-bar">
-            <menu-bar/>
-          </div>
-          <div class="center-news">
-            <center-news/>
-          </div>
-          <div class="organ-tree">
-            <organ-tree/>
-          </div>
-        </el-col>
-        <el-col :span="6" class="layout-body-inner">
-          C
-        </el-col>
-      </el-row>
+      <div class="layout-body-inner" style="width: 480px;">
+        <div class="video-channel">
+          <video-channel/>
+        </div>
+        <div class="devs-total">
+          <devs-total/>
+        </div>
+        <div class="nodes-total">
+          <nodes-total/>
+        </div>
+        <div class="camera-total">
+          <camera-total/>
+        </div>
+      </div>
+      <div class="layout-body-inner" style="width: 960px;">
+        <div class="menu-bar">
+          <menu-bar/>
+        </div>
+        <div class="center-news">
+          <center-news/>
+        </div>
+        <div class="organ-tree">
+          <organ-tree/>
+        </div>
+      </div>
+      <div class="layout-body-inner" style="width: 480px;">
+        <div class="failure">
+          <failure/>
+        </div>
+        <div class="repair">
+          <repair/>
+        </div>
+      </div>
     </div>
 
     <!-- <div class="fullscreen">
@@ -43,45 +46,45 @@
 </template>
 
 <script>
+import HeaderLogo from "./home-components/header-logo";
+import MenuBar from "./home-components/menu-bar";
+import CenterNews from "./home-components/center-news";
+import OrganTree from "./home-components/organ-tree";
+import VideoChannel from "./home-components/video-channel";
+import DevsTotal from "./home-components/devs-total";
+import NodesTotal from "./home-components/nodes-total";
+import CameraTotal from "./home-components/camera-total";
+import Failure from "./home-components/failure";
+import Repair from "./home-components/repair";
 export default {
   name: "home",
   components: {
-    "header-logo": resolve =>
-      require(["./home-components/header-logo"], resolve),
-    "menu-bar": resolve => require(["./home-components/menu-bar"], resolve),
-    "center-news": resolve =>
-      require(["./home-components/center-news"], resolve),
-    "organ-tree": resolve => require(["./home-components/organ-tree"], resolve),
-    "video-channel": resolve =>
-      require(["./home-components/video-channel"], resolve),
-    "devs-total": resolve => require(["./home-components/devs-total"], resolve),
-    "nodes-total": resolve =>
-      require(["./home-components/nodes-total"], resolve),
-    "camera-total": resolve =>
-      require(["./home-components/camera-total"], resolve)
-  },
-  created() {
-    this.$nextTick(() => {
-      let ele = this.$refs.main;
-      console.log(ele);
-      /* ele.style.transformOrigin = "0 0";
-      ele.style.transform = "scaleX(0.8) scaleY(0.8)"; */
-    });
+    HeaderLogo,
+    MenuBar,
+    CenterNews,
+    OrganTree,
+    VideoChannel,
+    DevsTotal,
+    NodesTotal,
+    CameraTotal,
+    Failure,
+    Repair
   }
 };
 </script>
 
 <style lang="scss" scoped>
 .layout {
-  width: 1920px;
-  height: 1080px;
-  background: url("~@/assets/0-bg.png");
+  width: 100%;
+  height: 100%;
   position: relative;
   &-header {
     height: 78px;
   }
   &-body {
     position: relative;
+    width: 100%;
+    height: calc(100% - 78px);
     &:before {
       display: block;
       content: "";
@@ -91,6 +94,20 @@ export default {
       position: absolute;
       left: 0;
       bottom: 0;
+    }
+    &:after {
+      display: block;
+      content: "";
+      width: 503px;
+      height: 101px;
+      background: url("~@/assets/footerline2.png");
+      position: absolute;
+      right: 0;
+      bottom: 0;
+    }
+    &-inner {
+      display: inline-block;
+      vertical-align: top;
     }
     .menu-bar {
       margin-top: 30px;
@@ -109,6 +126,9 @@ export default {
     }
     .camera-total {
       margin-top: 30px;
+    }
+    .repair {
+      margin-top: 35px;
     }
   }
 }
