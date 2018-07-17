@@ -7,14 +7,14 @@
       <div class="box-body-item">
         <div class="box-body-item-info">
           <div class="box-body-item-view sum"></div>
-          <div class="box-body-item-info-num">7332</div>
+          <div class="box-body-item-info-num">{{sum}}</div>
           <div class="box-body-item-info-title">总节点 (个)</div>
         </div>
       </div>
       <div class="box-body-item">
         <div class="box-body-item-info">
           <div class="box-body-item-view one"></div>
-          <div class="box-body-item-info-num">96</div>
+          <div class="box-body-item-info-num">{{online}}</div>
           <div class="box-body-item-info-title">运行节点 (个)</div>
         </div>
       </div>
@@ -23,7 +23,43 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    data: Object
+  },
+  data() {
+    return {
+      sum: 0,
+      online: 0
+    };
+  },
+  methods: {
+    animatedNumber(finalNum, originNum, type) {
+      if (finalNum == originNum) return;
+      let step = Math.ceil((finalNum - originNum) / (1500 / 50)); //递增步数
+      let timer = setInterval(() => {
+        originNum += step;
+        if (
+          (step > 0 && originNum >= finalNum) ||
+          (step < 0 && originNum <= finalNum) ||
+          step == 0
+        ) {
+          originNum = finalNum;
+          clearInterval(timer);
+        }
+        this[type] = originNum;
+      }, 25);
+    }
+  },
+  watch: {
+    "data.sum"(newValue) {
+      this.animatedNumber(newValue, this.sum, "sum");
+    },
+    "data.online"(newValue) {
+      this.animatedNumber(newValue, this.online, "online");
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>

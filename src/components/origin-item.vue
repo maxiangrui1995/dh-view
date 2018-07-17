@@ -1,5 +1,5 @@
 <template>
-  <div class="origin-item">
+  <div class="origin-item" :class="[active?'active':'']">
     <div class="origin-item-content" :title="slots">
       <slot></slot>
     </div>
@@ -8,6 +8,9 @@
 
 <script>
 export default {
+  props: {
+    active: Boolean
+  },
   data() {
     return {
       text: ""
@@ -17,7 +20,8 @@ export default {
     slots() {
       return this.$slots.default[0].text;
     }
-  }
+  },
+  created() {}
 };
 </script>
 
@@ -33,7 +37,6 @@ export default {
     width: 100%;
     height: 30px;
     background: url("~@/assets/node.png");
-    padding: 0 5px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
@@ -54,6 +57,17 @@ export default {
   &:after {
     background: url("~@/assets/node-right.png") no-repeat;
     right: 0;
+  }
+}
+.origin-item.active {
+  .origin-item-content {
+    background: url("~@/assets/node-active.png");
+  }
+  &:before {
+    background: url("~@/assets/node-left-active.png") no-repeat;
+  }
+  &:after {
+    background: url("~@/assets/node-right-active.png") no-repeat;
   }
 }
 </style>

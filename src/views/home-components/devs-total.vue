@@ -5,11 +5,13 @@
     </div>
     <div class="box-body">
       <div class="box-body-title">
-        <div class="box-body-inner title">设备</div>
-        <div class="box-body-inner num">统计</div>
+        <div class="box-body-title-item">
+          <div class="box-body-inner title">设备</div>
+          <div class="box-body-inner num">统计</div>
+        </div>
       </div>
       <div class="box-body-content">
-        <div class="box-body-item">
+        <!-- <div class="box-body-item">
           <div class="box-body-inner-icon dev01"></div>
           <div class="box-body-inner title">视频设备</div>
           <div class="box-body-inner num">1550</div>
@@ -18,14 +20,57 @@
           <div class="box-body-inner-icon dev02"></div>
           <div class="box-body-inner title">视频设备</div>
           <div class="box-body-inner num">1550</div>
-        </div>
+        </div> -->
+        <transition-group name="list" tag="div">
+          <div class="box-body-item" v-for="(item) in items" v-bind:key="item.category_num">
+            <div class="box-body-inner-icon" :class="'dev0'+item.category_num"></div>
+            <div class="box-body-inner title">{{item.name}}</div>
+            <div class="box-body-inner num">{{item.count}}</div>
+          </div>
+        </transition-group>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    data: Array
+  },
+  data() {
+    return {
+      items: []
+    };
+  },
+  methods: {},
+  created() {
+    setInterval(() => {
+      if (this.items.length > 0) {
+        let d = this.items[0];
+        this.items.splice(0, 1);
+        this.items.push(d);
+      }
+    }, 5000);
+  },
+  watch: {
+    data(data) {
+      if (this.items.length) {
+        data.forEach(item => {
+          this.items.forEach(item2 => {
+            item2.category_num = item2.category_num || {};
+            item.category_num = item.category_num || {};
+            if (item2.category_num == item.category_num) {
+              item2.count = item.count;
+            }
+          });
+        });
+      } else {
+        this.items = data;
+      }
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -52,13 +97,24 @@ export default {};
   width: 430px;
   margin: 0 auto;
   &-title {
-    width: 380px;
+    width: 430px;
     height: 36px;
     line-height: 36px;
-    float: right;
+    &:after {
+      display: block;
+      content: "";
+      clear: both;
+    }
+    &-item {
+      float: right;
+    }
   }
   &-title > &-inner {
     text-indent: 8px;
+  }
+  &-content {
+    height: 96px;
+    overflow: hidden;
   }
   &-inner {
     display: inline-block;
@@ -118,6 +174,19 @@ export default {};
   .dev05 {
     background: url("~@/assets/dev05.png");
   }
+}
+.list-move,
+.list-enter-active,
+.list-leave-active {
+  transition: 1s;
+}
+.list-leave-active {
+  position: absolute;
+}
+.list-enter,
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
 }
 </style>
 

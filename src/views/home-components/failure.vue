@@ -4,23 +4,24 @@
       <div class="box-title-wrapper">故障原因</div>
     </div>
     <div class="box-body">
+      <div class="tip" v-if="data.length==0">暂无数据</div>
       <el-carousel class="columns-carousel" @change="indexChange" :interval="interval" arrow="never" height="615px">
-        <el-carousel-item v-for="item in 3" :key="item">
-          <div v-for="$index in 3" :key="$index" class="item animated" :class="['item-amimate-'+$index, carouselIndex == (item-1) && fadeInRight ? 'fadeInRight' : '']">
+        <el-carousel-item v-for="item in counts" :key="item">
+          <div v-for="(item2,$index) in itemData[item]" :key="$index" class="item animated" :class="['item-amimate-'+$index, carouselIndex == (item-1) && fadeInRight ? 'fadeInRight' : '']">
             <div class="item-inner">
-              <span class="item-inner-info">路口名称</span>
+              <span class="item-inner-info">{{data[3*(item-1)+item2-1]['crossing_name']}}</span>
             </div>
             <div class="item-inner">
-              <span class="item-inner-title">告警等级:</span>
-              <span class="item-inner-info">1</span>
+              <span class="item-inner-title">告警等级{{$index}}:</span>
+              <span class="item-inner-info">{{data[3*(item-1)+item2-1]['level']}}</span>
             </div>
             <div class="item-inner">
               <span class="item-inner-title">故障时间:</span>
-              <span class="item-inner-info time">2018年7月11日14:56:42</span>
+              <span class="item-inner-info time">{{data[3*(item-1)+item2-1]['create_time']}}</span>
             </div>
             <div class="item-inner">
               <span class="item-inner-title">故障原因:</span>
-              <span class="item-inner-info">因故障原因故障原因故障原因故障原因</span>
+              <span class="item-inner-info">{{data[3*(item-1)+item2-1]['memo']}}</span>
             </div>
           </div>
         </el-carousel-item>
@@ -31,11 +32,14 @@
 
 <script>
 export default {
+  props: { data: Array },
   data() {
     return {
       interval: 5000,
       fadeInRight: false,
-      carouselIndex: 0
+      carouselIndex: 0,
+      counts: 0,
+      itemData: []
     };
   },
   methods: {
@@ -49,6 +53,29 @@ export default {
       } else {
         this.fadeInRight = false;
       }
+    }
+  },
+  created() {},
+  computed: {
+    msgFailure() {
+      return this.$store.state.msgFailure;
+    }
+  },
+  watch: {
+    data(data) {
+      let count = Math.ceil(data.length / 3);
+      this.counts = count;
+      for (let i = 0; i < count; i++) {
+        this.itemData[i + 1] =
+          data.length - 3 * i > 3 ? 3 : data.length - 3 * i;
+      }
+    },
+    msgFailure(value) {
+      this.data.unshift(value);
+      if (this.data.length > 9) {
+        this.data.pop();
+      }
+      // 判断ID
     }
   }
 };
@@ -98,14 +125,18 @@ export default {
   .item:last-child {
     border-bottom: none;
   }
+  .item-amimate-0 {
+    animation-delay: 0.16s;
+  }
   .item-amimate-1 {
-    animation-delay: 0.1s;
+    animation-delay: 0.26s;
   }
   .item-amimate-2 {
-    animation-delay: 0.2s;
+    animation-delay: 0.36s;
   }
-  .item-amimate-3 {
-    animation-delay: 0.3s;
+  .tip {
+    text-align: center;
+    color: rgba($color: #f1f1f1, $alpha: 0.6);
   }
 }
 </style>

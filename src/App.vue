@@ -4,7 +4,7 @@
       <y-home/>
     </div>
   </el-scrollbar> -->
-  <div class="container">
+  <div class="container" ref="main-container">
     <y-home/>
   </div>
 </template>
@@ -13,8 +13,19 @@
 import yHome from "./views/Home";
 export default {
   components: { yHome },
-  methods: {},
-  beforeCreate() {
+  data() {
+    return {};
+  },
+  methods: {
+    scale() {
+      let ele = this.$refs["main-container"];
+      let width = this.screenObjet.width;
+      let height = this.screenObjet.height;
+      ele.style.transformOrigin = "0 0";
+      ele.style.transform = `scaleX(${width / 1920}) scaleY(${height / 1080})`;
+    }
+  },
+  created() {
     // 验证是否登录：读取本地cookie(znyw_token)
     let reg = new RegExp("(^| )znyw_token=([^;]*)(;|$)");
     if (!document.cookie.match(reg)) {
@@ -22,12 +33,18 @@ export default {
       if (process.env.NODE_ENV === "production") {
         window.location.href = "http://www.baidu.com";
       } else {
-        /* this.$message({
-          message: "警告！未登录",
-          type: "warning",
-          showClose: true
-        }); */
+        console.error("未登录");
       }
+    } else {
+      this.$store.dispatch("login", true);
+    }
+    this.$nextTick(() => {
+      this.scale();
+    });
+  },
+  computed: {
+    screenObjet() {
+      return this.$store.state.screenOffset;
     }
   }
 };

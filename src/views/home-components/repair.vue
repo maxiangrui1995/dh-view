@@ -6,20 +6,23 @@
     <div class="box-body">
       <div class="box-body-view">
         <canvas ref="view" width="160" height="160"></canvas>
-        <div class="total">100</div>
+        <transition name="num-plus">
+          <p v-if="show" class="add">+{{1}}</p>
+        </transition>
+        <div class="total">{{total}}</div>
       </div>
       <div class="box-body-info">
         <div class="box-body-info-header">
           <span>自动修复率</span>
-          <span class="num">100%</span>
+          <span class="num">{{auto_radio}}%</span>
         </div>
         <div class="box-body-info-info">
           <span>自动修复</span>
-          <span class="num">100个</span>
+          <span class="num">{{automatic}}个</span>
         </div>
         <div class="box-body-info-info">
           <span>人工修复</span>
-          <span class="num">100个</span>
+          <span class="num">{{artificial}}个</span>
         </div>
       </div>
     </div>
@@ -28,8 +31,17 @@
 
 <script>
 export default {
+  props: {
+    data: Object
+  },
   data() {
-    return {};
+    return {
+      show: false,
+      total: 0, //自动修复数+人工修复数
+      auto_radio: 0, //自动修复率
+      automatic: 0, //自动修复数
+      artificial: 0 //人工修复数
+    };
   },
   methods: {
     view() {
@@ -119,12 +131,66 @@ export default {
       };
 
       render();
+    },
+    animationNum(finalNum, originNum, type) {
+      let step = Math.ceil(finalNum / (1500 / 50)); //递增步数
+      step = finalNum < originNum ? -step : step;
+
+      let timer = setInterval(() => {
+        originNum += step;
+        if (
+          (step > 0 && originNum >= finalNum) ||
+          (step < 0 && originNum <= finalNum) ||
+          step == 0
+        ) {
+          originNum = finalNum;
+          clearInterval(timer);
+        }
+        this[type] = originNum;
+      }, 50);
     }
   },
   mounted() {
     this.$nextTick(() => {
       this.view();
     });
+  },
+  computed: {
+    TOTAL() {
+      return this.data.automatic + this.data.artificial;
+    },
+    msgRequire() {
+      return this.$store.state.msgRequire;
+    }
+  },
+  watch: {
+    TOTAL() {
+      this.animationNum(this.TOTAL, this.total, "total");
+    },
+    "data.artificial"(value) {
+      this.animationNum(value, this.artificial, "artificial");
+    },
+    "data.auto_radio"(value) {
+      this.animationNum(value, this.auto_radio, "auto_radio");
+    },
+    "data.automatic"(value) {
+      this.animationNum(value, this.automatic, "automatic");
+    },
+    msgRequire(value) {
+      if (value) {
+        this.show = !this.show;
+        if (value.message_type == "2") {
+          this.automatic++;
+        }
+        if (value.message_type == "3") {
+          this.artificial++;
+        }
+        this.total++;
+        setTimeout(() => {
+          this.show = !this.show;
+        }, 2000);
+      }
+    }
   }
 };
 </script>
@@ -159,7 +225,7 @@ export default {
         position: absolute;
         bottom: 45px;
         width: 100%;
-        font-size: 1.368em;
+        font-size: 1.468em;
       }
     }
     &-info {
@@ -186,7 +252,32 @@ export default {
         margin-right: 20px;
       }
     }
+    .add {
+      color: #fff;
+      position: absolute;
+      top: 4px;
+      left: 50%;
+      width: 100px;
+      margin-left: -50px;
+      font-size: 2em;
+    }
   }
+}
+.num-plus-enter-active {
+  transition: all 0.4s ease;
+}
+.num-plus-enter {
+  transform: translatey(10px);
+}
+.num-plus-leave-active {
+  transition: all 1s;
+}
+.num-plus-leave-to {
+  transform: translatey(-20px);
+}
+.num-plus-enter,
+.num-plus-leave-to {
+  opacity: 0;
 }
 </style>
 
