@@ -1,7 +1,7 @@
 <template>
   <div class="box fadeInUp animated">
     <div class="box-wrapper">
-      <div class="box-item" v-for="item in menuList" :key="item.name" :class="{active: item.name === menuActive}">
+      <div class="box-item" v-for="item in menuList" :key="item.name" :class="{active: item.name === menuActive}" @click="menuClick(item)">
         <i :class="item.class" class="box-item-icon"></i>
         <span>{{item.name}}</span>
       </div>
@@ -64,6 +64,12 @@ export default {
       setInterval(() => {
         this.getDateTime();
       }, 1000);
+    },
+    menuClick(data) {
+      sessionStorage.setItem("jk_url", data.title);
+      if (process.env.NODE_ENV === "production") {
+        window.location.href = indexURL;
+      }
     }
   },
   created() {
